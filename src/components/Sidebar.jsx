@@ -1,7 +1,7 @@
 import React from "react";
 import "./Sidebar.css";
 
-const Sidebar = ({onAddNote, notes}) => {
+const Sidebar = ({onAddNote, notes, onDeleteNote,activeNote,setActiveNote}) => {
     console.log("Snotes is ", notes);
   return (
     <div className="app-sidebar">
@@ -12,10 +12,11 @@ const Sidebar = ({onAddNote, notes}) => {
         <div className="app-sidebar-notes">
             {/* ↓notesの値をnoteへ */}
             {notes.map((note)=>(
-                <div className="app-sidebar-note">
+                <div className="app-sidebar-note active" key={note.id} onClick{()=>setActiveNote(note.id)}>
                     <div className="sidebar-note-title">
                         <strong>{note.title}</strong>
-                        <button>Delete</button>
+                        {/* arrow関数で書きリロードしたときに作動しないように,引数をとる時 */}
+                        <button onClick={()=>onDeleteNote(note.id)}>Delete</button>
                     </div>
                     <p>{note.content}</p>
                     <small>{new Date(note.modDate).toLocaleDateString("ja-JP",{
