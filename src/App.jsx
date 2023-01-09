@@ -12,7 +12,7 @@ function App() {
   const [activeNote,setActiveNote]=useState(false);
 
   const onAddNote=()=>{
-    console.log("new note");
+    //console.log("new note");
     //ノートの持つ内容を指定
     //id をランダムに設定uuid
     const newNote ={
@@ -35,6 +35,12 @@ function App() {
     setNotes(filterNotes);
   };
 
+  //activeなnotesのオブジェクトを取得
+    const getActiveNote=()=>{
+      //activeNoteのidと一致するときのnotesを返す
+      return notes.find((note)=>note.id===activeNote)
+    }
+
   return (
     <div className="App">
         <Sidebar 
@@ -44,7 +50,7 @@ function App() {
         activeNote={activeNote}
         setActiveNote={setActiveNote}
         />
-        <Main/>
+        <Main activeNote={getActiveNote()}/>
     </div>
   )
 }

@@ -3,6 +3,9 @@ import "./Sidebar.css";
 
 const Sidebar = ({onAddNote, notes, onDeleteNote,activeNote,setActiveNote}) => {
     console.log("Snotes is ", notes);
+    console.log("activeNote is",activeNote);
+    console.log("setActiveNots is",setActiveNote);
+    console.log("notes is", notes);
   return (
     <div className="app-sidebar">
         <div className="app-sidebar-header">
@@ -12,7 +15,10 @@ const Sidebar = ({onAddNote, notes, onDeleteNote,activeNote,setActiveNote}) => {
         <div className="app-sidebar-notes">
             {/* ↓notesの値をnoteへ */}
             {notes.map((note)=>(
-                <div className="app-sidebar-note active" key={note.id} onClick{()=>setActiveNote(note.id)}>
+                <div className={`app-sidebar-note ${note.id === activeNote && "active"}`} 
+                key={note.id} //noteのidを送る
+                onClick={()=> setActiveNote(note.id)}>
+
                     <div className="sidebar-note-title">
                         <strong>{note.title}</strong>
                         {/* arrow関数で書きリロードしたときに作動しないように,引数をとる時 */}
