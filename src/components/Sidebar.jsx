@@ -6,6 +6,9 @@ const Sidebar = ({onAddNote, notes, onDeleteNote,activeNote,setActiveNote}) => {
     console.log("activeNote is",activeNote);
     console.log("setActiveNots is",setActiveNote);
     console.log("notes is", notes);
+    const sortedNotes=notes.sort((a,b)=>b.modDate-a.modDate);
+
+
   return (
     <div className="app-sidebar">
         <div className="app-sidebar-header">
@@ -14,7 +17,7 @@ const Sidebar = ({onAddNote, notes, onDeleteNote,activeNote,setActiveNote}) => {
         </div>
         <div className="app-sidebar-notes">
             {/* ↓notesの値をnoteへ */}
-            {notes.map((note)=>(
+            {sortedNotes.map((note)=>(
                 <div className={`app-sidebar-note ${note.id === activeNote && "active"}`} 
                 key={note.id} //noteのidを送る
                 onClick={()=> setActiveNote(note.id)}>

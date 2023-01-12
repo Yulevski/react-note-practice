@@ -7,9 +7,14 @@ import uuid from "react-uuid";
 function App() {
   //ノートを追加する為配列として保持
   //notesが複数のノートを保持 setNotesでnotes更新
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes")||[]));
   //ノートの状態を判定する falseなので何もされない
   const [activeNote,setActiveNote]=useState(false);
+  
+  useEffect(()=>{
+    //save at the local strage
+    setActiveNote(notes[0].id);
+  },[]);
 
   const onAddNote=()=>{
     //console.log("new note");
@@ -39,7 +44,19 @@ function App() {
     const getActiveNote=()=>{
       //activeNoteのidと一致するときのnotesを返す
       return notes.find((note)=>note.id===activeNote)
-    }
+    };
+
+  const onUpdateNote=(updatedNote)=>{
+    //修正された新しいノートの配列を返す。
+    const updatedNotesArray=notes.map((note)=>{
+      if(note.id === updatedNote.id){
+        return updatedNote;
+      } else {
+        return note;
+      }
+    });
+    setNotes(updatedNotesArray);
+  };
 
   return (
     <div className="App">
@@ -50,7 +67,8 @@ function App() {
         activeNote={activeNote}
         setActiveNote={setActiveNote}
         />
-        <Main activeNote={getActiveNote()}/>
+        <Main activeNote={getActiveNote()}
+        onUpdatedNote={onUpdateNote}/>
     </div>
   )
 }
